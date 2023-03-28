@@ -1,0 +1,7 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: Inventario de Recambios
+  description: >
+    ## API REST para la gestión del inventario completo de recambios del taller.
