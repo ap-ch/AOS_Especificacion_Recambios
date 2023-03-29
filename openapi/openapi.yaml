@@ -2,6 +2,100 @@ openapi: 3.0.3
 
 info:
   version: 1.0.0
-  title: Inventario de Recambios
+  title: 🚗[AOS 2023] Inventario de taller de coches 🚗
   description: >
-    ## API REST para la gestión del inventario completo de recambios del taller.
+    ## 🚘 API REST para la gestión de inventario de taller de coches
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: http://127.0.0.1:80/api/v1
+tags:
+  - name: '⚙️Iventario'
+
+paths:
+   
+components:
+  schemas:
+   Recambio: 
+    title: '⚙️ Recambio de una artículo del taller'
+    description: >
+      Un recambio de un taller de vehículos se refiere a la sustitución de una pieza o componente
+      dañado o desgastado en un vehículo por uno nuevo o reemplazo. Los talleres de vehículos
+      ofrecen una amplia variedad de recambios para distintas marcas y modelos de vehículos,
+      desde elementos tan básicos como las bujías hasta componentes más complejos como motores y transmisiones
+    type: object
+    properties:
+      Recambio:
+        type: object
+        required: [nombre,descripción,proveedor,equivalencias,garantía,precio,IVA,importe,cantidad]
+        properties:
+          nombre:
+            $ref: '#/components/schemas/Nombre_Recambio'
+          descripción:
+            $ref: '#/components/schemas/Descripcion_Recambio'
+          proveedor:
+            $ref: '#/components/schemas/Proveedor_Recambio'
+          equivalencias:
+            $ref: '#/components/schemas/Garantia_Recambio'
+          garantía:
+            $ref: '#/components/schemas/Garantia_Recambio'
+          precio: 
+            $ref: '#/components/schemas/Precio_Recambio'
+          IVA:
+            $ref: '#/components/schemas/IVA_Recambio'
+          importe:
+            $ref: '#/components/schemas/Importe_Recambio'
+          cantidad: 
+            $ref: '#/components/schemas/Cantidad_Recambio'
+
+   Nombre_Recambio:
+     title: 'Nombre recambio'
+     type: string
+   Descripcion_Recambio:
+     title: 'Descripcion'
+     description: >
+       Explicación detallada de las características, funciones y especificaciones
+       técnicas de una pieza o componente de repuesto para un vehículo. Esta descripción
+       es importante para asegurarse de que el recambio es adecuado para el vehículo y 
+       para comprender su función dentro del mismo.
+     type: string
+
+   Proveedor_Recambio:
+      title: 'Proveedor del recambio'
+      description: >
+       El proveedor de un recambio para un taller de vehículos puede ser una empresa
+       especializada en la fabricación y distribución de piezas de repuesto para automóviles
+       o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
+      type: string
+   Equivalencias_Recambio:
+      title: ''
+   Garantia_Recambio:
+      title: 'Garantía del recambio'
+      description: >
+        
+   Precio_Recambio:
+      title: 'Precio'
+      description: 'Precio sin IVA asignado a cada recambio'
+      type: number
+      format: double
+   IVA_Recambio:
+      title: 'IVA '
+      description: >
+       Es un tributo de carácter indirecto. Recae sobre los consumidores,
+       puesto que lo pagan al adquirir un producto o servicio: sobre el precio neto 
+       de los mismos se establece una aplicación que varía en su porcentaje.
+      type: string
+      pattern: '/^[0-9]{1,2}[%]$/'
+      example: '21%'
+       # https://v6.fakerjs.dev/guide/
+      x-faker: helpers.regexpStyleStringParse('/^[0-9]{1,2}[%]$/')
+   Importe_Recambio:
+      title: 'Importe'
+      description: 'Precio final añadiendo el IVA al precio a cada recambio'
+      type: number
+      format: double
+   Cantidad_Recambio:
+      title: 'Cantidad'
+      description: 'Numero de unidades del recambio disponibles en el taller'
+      type: integer
