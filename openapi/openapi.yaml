@@ -5,3 +5,25 @@ info:
   title: Inventario de Recambios
   description: >
     ## API REST para la gestión del inventario completo de recambios del taller.
+
+  headers:
+    Etag:
+      description: "Entitiy tag (Identificador único proporcionado para validación de caché)"
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
+        example:
+          35c3d556o23utew
+    Allow:
+      description: "Lista de métodos HTTP soportados"
+      schema:
+        type: string
+      example: GET, DELETE, PUT, OPTIONS
+    Location:
+      description: '`URI` del nuevo recurso'
+      schema:
+        type: string
+        format: uri
+        x-facker: internet.url
+        example:
+          https://example.com/api/v1/recambios/
