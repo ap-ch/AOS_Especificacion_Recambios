@@ -61,7 +61,7 @@ components:
        para comprender su función dentro del mismo.
      type: string
 
-   Proveedor_Recambio
+   Proveedor_Recambio:
       title: 'Proveedor del recambio'
       description: >
        El proveedor de un recambio para un taller de vehículos puede ser una empresa
@@ -69,10 +69,31 @@ components:
        o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
       type: string
    Equivalencias_Recambio:
-      title: ''
+      title: 'Equivalencias'
+      description: >
+        Las equivalencias de un recambio para un vehículo se refieren a piezas o componentes que,
+        aunque no sean exactamente iguales en diseño o especificaciones técnicas a la pieza 
+        original del vehículo, pueden ser utilizadas como reemplazo para dicha pieza.
+      type: string
+      items:
+         type: object
+         properties:
+           nombre: 
+             type: string
+             description: 'Nombre de la pieza equivalente'
+           fabricante:
+             type: string
+             description: 'Nombre del fabricante de la pieza equivalente'
+           modelo:
+             type: string
+             description: 'Modelo de vehículo compatible con la pieza equivalente'
    Garantia_Recambio:
       title: 'Garantía del recambio'
       description: >
+        La garantía de un recambio de un vehículo es un compromiso que el fabricante o vendedor 
+        del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
+        de manera adecuada y sin defectos durante un periodo de tiempo determinado.
+      type: string
         
    Precio_Recambio:
       title: 'Precio'
