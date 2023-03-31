@@ -61,7 +61,7 @@ components:
        para comprender su función dentro del mismo.
      type: string
 
-   Proveedor_Recambio:
+   Proveedor_Recambio
       title: 'Proveedor del recambio'
       description: >
        El proveedor de un recambio para un taller de vehículos puede ser una empresa
