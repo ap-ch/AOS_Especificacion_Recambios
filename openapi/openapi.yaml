@@ -1,131 +1,131 @@
 openapi: 3.0.3
 
 info:
-    version: 1.0.0
-    title: 🚗[AOS 2023] Inventario de Recambios del taller 🚗
-    description: >
-       ## 🚘 API REST para la gestión de inventario de taller de coches
-    license:
-        name: MIT
-        url: 'https://opensource.org/licenses/MIT'
+  version: 1.0.0
+  title: 🚗[AOS 2023] Inventario de Recambios del taller 🚗
+  description: >
+    ## 🚘 API REST para la gestión de inventario de taller de coches
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
 servers:
-     - url: http://127.0.0.1:80/api/v1
+  - url: http://127.0.0.1:80/api/v1
 tags:
-     - name: '⚙️Inventario'
+  - name: '⚙️Inventario'
 
 paths:
    
 components:
-    schemas:
-        Recambio: 
-            title: '⚙️ Recambio de un artículo del taller'
-            description: >
-              Un recambio de un taller de vehículos se refiere a la sustitución de una pieza o componente
-              dañado o desgastado en un vehículo por uno nuevo o reemplazo. Los talleres de vehículos
-              ofrecen una amplia variedad de recambios para distintas marcas y modelos de vehículos,
-              desde elementos tan básicos como las bujías hasta componentes más complejos como motores y transmisiones.
-            type: object
-            properties:
-                Recambio:
-                    type: object
-                    required: [nombre,descripcion,proveedor,equivalencias,garantia,precio,iva,importe,cantidad]
-                    properties:
-                         nombre:
-                             $ref: '#/components/schemas/Nombre_Recambio'
-                         descripcion:
-                             $ref: '#/components/schemas/Descripcion_Recambio'
-                         proveedor:
-                             $ref: '#/components/schemas/Proveedor_Recambio'
-                         equivalencias:
-                             $ref: '#/components/schemas/Equivalencias_Recambio'
-                         garantia:
-                             $ref: '#/components/schemas/Garantia_Recambio'
-                         precio: 
-                             $ref: '#/components/schemas/Precio_Recambio'
-                         iva:
-                             $ref: '#/components/schemas/IVA_Recambio'
-                         importe:
-                             $ref: '#/components/schemas/Importe_Recambio'
-                         cantidad: 
-                             $ref: '#/components/schemas/Cantidad_Recambio'
+  schemas:
+    Recambio: 
+      title: '⚙️ Recambio de un artículo del taller'
+      description: >
+        Un recambio de un taller de vehículos se refiere a la sustitución de una pieza o componente
+        dañado o desgastado en un vehículo por uno nuevo o reemplazo. Los talleres de vehículos
+        ofrecen una amplia variedad de recambios para distintas marcas y modelos de vehículos,
+        desde elementos tan básicos como las bujías hasta componentes más complejos como motores y transmisiones.
+      type: object
+      properties:
+        Recambio:
+          type: object
+          required: [nombre,descripcion,proveedor,equivalencias,garantia,precio,iva,importe,cantidad]
+          properties:
+            nombre:
+              $ref: '#/components/schemas/Nombre_Recambio'
+            descripcion:
+              $ref: '#/components/schemas/Descripcion_Recambio'
+            proveedor:
+              $ref: '#/components/schemas/Proveedor_Recambio'
+            equivalencias:
+              $ref: '#/components/schemas/Equivalencias_Recambio'
+            garantia:
+              $ref: '#/components/schemas/Garantia_Recambio'
+            precio: 
+              $ref: '#/components/schemas/Precio_Recambio'
+            iva:
+              $ref: '#/components/schemas/IVA_Recambio'
+            importe:
+              $ref: '#/components/schemas/Importe_Recambio'
+            cantidad: 
+              $ref: '#/components/schemas/Cantidad_Recambio'
 
-        Nombre_Recambio:
-            title: 'Nombre recambio'
-            type: string
-        Descripcion_Recambio:
-            title: 'Descripcion'
-            description: >
-                Explicación detallada de las características, funciones y especificaciones
-                técnicas de una pieza o componente de repuesto para un vehículo. Esta descripción
-                es importante para asegurarse de que el recambio es adecuado para el vehículo y 
-                para comprender su función dentro del mismo.
-            type: string
+    Nombre_Recambio:
+      title: 'Nombre recambio'
+      type: string
+    Descripcion_Recambio:
+      title: 'Descripcion'
+      description: >
+        Explicación detallada de las características, funciones y especificaciones
+        técnicas de una pieza o componente de repuesto para un vehículo. Esta descripción
+        es importante para asegurarse de que el recambio es adecuado para el vehículo y 
+        para comprender su función dentro del mismo.
+      type: string
 
-        Proveedor_Recambio:
-            title: 'Proveedor del recambio'
-            description: >
-                El proveedor de un recambio para un taller de vehículos puede ser una empresa
-                especializada en la fabricación y distribución de piezas de repuesto para automóviles
-                o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
+    Proveedor_Recambio:
+      title: 'Proveedor del recambio'
+      description: >
+        El proveedor de un recambio para un taller de vehículos puede ser una empresa
+        especializada en la fabricación y distribución de piezas de repuesto para automóviles
+        o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
+      type: string
+    Equivalencias_Recambio:
+      title: 'Equivalencias'
+      description: >
+        Las equivalencias de un recambio para un vehículo se refieren a piezas o componentes que,
+        aunque no sean exactamente iguales en diseño o especificaciones técnicas a la pieza 
+        original del vehículo, pueden ser utilizadas como reemplazo para dicha pieza.
+      type: string
+      items:
+        type: object
+        properties:
+          nombre: 
             type: string
-        Equivalencias_Recambio:
-            title: 'Equivalencias'
-            description: >
-                Las equivalencias de un recambio para un vehículo se refieren a piezas o componentes que,
-                aunque no sean exactamente iguales en diseño o especificaciones técnicas a la pieza 
-                original del vehículo, pueden ser utilizadas como reemplazo para dicha pieza.
+            description: 'Nombre de la pieza equivalente'
+          fabricante:
             type: string
-            items:
-                type: object
-                properties:
-                    nombre: 
-                        type: string
-                        description: 'Nombre de la pieza equivalente'
-                    fabricante:
-                        type: string
-                        description: 'Nombre del fabricante de la pieza equivalente'
-                    modelo:
-                        type: string
-                        description: 'Modelo de vehículo compatible con la pieza equivalente'
+            description: 'Nombre del fabricante de la pieza equivalente'
+          modelo:
+            type: string
+            description: 'Modelo de vehículo compatible con la pieza equivalente'
              
-        Garantia_Recambio:
-            title: 'Garantía del recambio'
-            description: >
-                La garantía de un recambio de un vehículo es un compromiso que el fabricante o vendedor 
-                del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
-                de manera adecuada y sin defectos durante un periodo de tiempo determinado.
-            type: string
-        Precio_Recambio:
-            title: 'Precio'
-            description: 'Precio sin IVA asignado a cada recambio'
-            type: number
-            format: double
-            minimum: 0
-            exclusiveMinimum: true
-        IVA_Recambio:
-            title: 'IVA '
-            description: >
-                Es un tributo de carácter indirecto. Recae sobre los consumidores,
-                puesto que lo pagan al adquirir un producto o servicio: sobre el precio neto 
-                de los mismos se establece una aplicación que varía en su porcentaje.
-            type: string
-            pattern: '/^[0-9]{1,2}[%]$/'
-            example: '21%'
-                # https://v6.fakerjs.dev/guide/
-            x-faker: helpers.regexpStyleStringParse('/^[0-9]{1,2}[%]$/')
-        Importe_Recambio:
-            title: 'Importe'
-            description: 'Precio final añadiendo el IVA al precio a cada recambio'
-            type: number
-            format: double
-            minimum: 0
-            exclusiveMinimum: true
-        Cantidad_Recambio:
-            title: 'Cantidad'
-            description: 'Número de unidades del recambio disponibles en el taller'
-            type: integer
-            minimum: 0
-            maximum: 10000
+    Garantia_Recambio:
+      title: 'Garantía del recambio'
+      description: >
+        La garantía de un recambio de un vehículo es un compromiso que el fabricante o vendedor 
+        del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
+        de manera adecuada y sin defectos durante un periodo de tiempo determinado.
+      type: string
+    Precio_Recambio:
+      title: 'Precio'
+      description: 'Precio sin IVA asignado a cada recambio'
+      type: number
+      format: double
+      minimum: 0
+      exclusiveMinimum: true
+    IVA_Recambio:
+      title: 'IVA '
+      description: >
+        Es un tributo de carácter indirecto. Recae sobre los consumidores,
+        puesto que lo pagan al adquirir un producto o servicio: sobre el precio neto 
+        de los mismos se establece una aplicación que varía en su porcentaje.
+      type: string
+      pattern: '/^[0-9]{1,2}[%]$/'
+      example: '21%'
+        # https://v6.fakerjs.dev/guide/
+      x-faker: helpers.regexpStyleStringParse('/^[0-9]{1,2}[%]$/')
+    Importe_Recambio:
+      title: 'Importe'
+      description: 'Precio final añadiendo el IVA al precio a cada recambio'
+      type: number
+      format: double
+      minimum: 0
+      exclusiveMinimum: true
+    Cantidad_Recambio:
+      title: 'Cantidad'
+      description: 'Número de unidades del recambio disponibles en el taller'
+      type: integer
+      minimum: 0
+      maximum: 10000
 
     
    
