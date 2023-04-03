@@ -126,7 +126,7 @@ components:
       type: integer
       minimum: 0
       maximum: 10000
-      
+
     HTTP_Problem:
       type: object
       externalDocs:
@@ -186,10 +186,10 @@ components:
           schema:
             $ref: '#/componentes/schemas/HTTP_Problem'
           examples:
-            response-http-404:
+            response-http-400:
               $ref: '#/componentes/examples/response-http-400'
     Response_404:
-      description: '`NOT FOUND`: recurso no disponbible'
+      description: '`NOT FOUND`: Recurso no disponbible'
       content: 
         application/problem+json:
           schema:
@@ -204,7 +204,7 @@ components:
           schema:
             $ref: '#/componentes/schemas/HTTP_Problem'
           examples:
-            response-http-404:
+            response-http-409:
               $ref: '#/componentes/examples/response-http-409'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
@@ -224,7 +224,11 @@ components:
           examples:
             response-http-422:
               $ref: '#/componentes/examples/response-http-422'
+
+
     
+
+
           
 
     
