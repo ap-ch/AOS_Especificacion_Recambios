@@ -148,3 +148,54 @@ components:
         x-facker: internet.url
         example:
           https://example.com/api/v1/recambios/
+  
+  parameters:
+    Nombre_Recambio:
+      name: Nombre_Recambio
+      in: path
+      description: Nombre del recambio correspondiente a un articulo del taller
+      required: true
+      schema:
+        $ref: '#/components/schemas/Nombre_Recambio'
+
+    Proveedor_Recambio:
+      name: Proveedor_Recambio
+      in: path
+      description: El proveedor de un recambio para el taller de vehículos
+      required: false
+      schema:
+        $ref: '#/components/schemas/Proveedor_Recambio'
+
+    Equivalencias_Recambio:
+      name: Equivalencias_Recambio
+      in: path
+      description: equivalencias de un recambio para un vehículo
+      required: false
+      schema:
+        $ref: '#/components/schemas/Equivalencias_Recambio'
+    
+    Importe_Recambio:
+      name: Importe_Recambio
+      in: path
+      description: Precio final añadiendo el IVA al precio a cada recambio
+      required: false
+      schema:
+        $ref: '#/components/schemas/Importe_Recambio'
+
+    Cantidad_Recambio:
+      name: Cantidad_Recambio
+      in: path
+      description: Número de unidades del recambio disponibles en el taller
+      required: false
+      schema:
+        $ref: '#/components/schemas/Cantidad_Recambio'
+
+    ifMatchParam:
+      name: If-Match
+      in: header
+      description: ETag actual del recurso que se desea modificar
+      required: true
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
+
