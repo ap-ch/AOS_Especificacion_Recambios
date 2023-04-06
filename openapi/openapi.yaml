@@ -48,7 +48,7 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
-
+              
     Nombre_Recambio:
       title: 'Nombre recambio'
       type: string
@@ -148,3 +148,57 @@ components:
         x-facker: internet.url
         example:
           https://example.com/api/v1/recambios/
+  
+  requestBodies:
+    recambioRB:
+      description: Información del nuevo recambio
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [nombre, proveedor, garantia, precio, iva, cantidad]
+            properties:
+              nombre:
+                $ref: '#/components/schemas/Nombre_Recambio'
+              descripcion:
+                $ref: '#/components/schemas/Descripcion_Recambio'
+              proveedor:
+                $ref: '#/components/schemas/Proveedor_Recambio'
+              equivalencias:
+                $ref: '#/components/schemas/Equivalencias_Recambio'
+              garantia:
+                $ref: '#/components/schemas/Garantia_Recambio'
+              precio: 
+                $ref: '#/components/schemas/Precio_Recambio'
+              iva:
+                $ref: '#/components/schemas/IVA_Recambio'
+              importe:
+                $ref: '#/components/schemas/Importe_Recambio'
+              cantidad:
+                $ref: '#/components/schemas/Cantidad_Recambio'
+    recambioUpdate:
+      description: Nuevos atributos del recambio
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              descripcion:
+                $ref: '#/components/schemas/Descripcion_Recambio'
+              proveedor:
+                $ref: '#/components/schemas/Proveedor_Recambio'
+              equivalencias:
+                $ref: '#/components/schemas/Equivalencias_Recambio'
+              garantia:
+                $ref: '#/components/schemas/Garantia_Recambio'
+              precio: 
+                $ref: '#/components/schemas/Precio_Recambio'
+              iva:
+                $ref: '#/components/schemas/IVA_Recambio'
+              importe:
+                $ref: '#/components/schemas/Importe_Recambio'
+              cantidad: 
+                $ref: '#/components/schemas/Cantidad_Recambio'
+          example: { "precio": 19.95, "cantidad": 50 }
