@@ -127,6 +127,35 @@ components:
       minimum: 0
       maximum: 10000
 
+    HTTP_Problem:
+      type: object
+      externalDocs:
+        url: https://tools.ietf.org/html/rfc7807
+      description: |
+        Problem Details for HTTP APIs
+        [https://tools.ietf.org/html/rfc7807](https://tools.ietf.org/html/rfc7807)
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference [RFC3986] that identifies the problem type
+        title:
+          type: string
+          description: short human-readable summary of the problem type
+        status:
+          type: number
+          description: HTTP status code
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence of the problem
+        instance:
+          type: string
+          format: uri
+          description: >
+            A URI reference that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.
+    
+
   headers:
     Etag:
       description: "Entitiy tag (Identificador único proporcionado para validación de caché)"
@@ -148,3 +177,59 @@ components:
         x-facker: internet.url
         example:
           https://example.com/api/v1/recambios/
+
+  responses: 
+    Response_400:
+      description: '`BAD REQUEST`: El identificador único ya existe'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-400:
+              $ref: '#/componentes/examples/response-http-400'
+    Response_404:
+      description: '`NOT FOUND`: Recurso no disponbible'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-404:
+              $ref: '#/componentes/examples/response-http-404'
+    Response_409:
+      description: '`CONFLICT`: El recurso no reúne las condiciones adecuadas'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-409:
+              $ref: '#/componentes/examples/response-http-409'
+    Response_412:
+      description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-412:
+              $ref: '#/componentes/examples/response-http-412' 
+    Response_422:
+      description: '`UNPROCESSABLE ENTITY`: Falta alguno de los atributos obligatorios o son incorrectos'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-422:
+              $ref: '#/componentes/examples/response-http-422'
+
+
+    
+
+
+          
+
+    
+   
