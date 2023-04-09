@@ -253,8 +253,10 @@ components:
         application/json:
           schema:
             type: object
-            required: [nombre, proveedor, garantia, precio, iva, cantidad]
+            required: [numero_serie, nombre, proveedor, garantia, precio, iva, cantidad]
             properties:
+              numero_serie:
+                $ref: '#/components/schemas/Numero_Serie'
               nombre:
                 $ref: '#/components/schemas/Nombre_Recambio'
               descripcion:
@@ -281,6 +283,8 @@ components:
           schema:
             type: object
             properties:
+              nombre:
+                $ref: '#/components/schemas/Nombre_Recambio'
               descripcion:
                 $ref: '#/components/schemas/Descripcion_Recambio'
               proveedor:
@@ -305,7 +309,7 @@ components:
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-400:
               $ref: '#/componentes/examples/response-http-400'
@@ -314,34 +318,34 @@ components:
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-404:
-              $ref: '#/componentes/examples/response-http-404'
+              $ref: '#/components/examples/response-http-404'
     Response_409:
       description: '`CONFLICT`: El recurso no reúne las condiciones adecuadas'
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-409:
-              $ref: '#/componentes/examples/response-http-409'
+              $ref: '#/components/examples/response-http-409'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-412:
-              $ref: '#/componentes/examples/response-http-412' 
+              $ref: '#/components/examples/response-http-412' 
     Response_422:
       description: '`UNPROCESSABLE ENTITY`: Falta alguno de los atributos obligatorios o son incorrectos'
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-422:
-              $ref: '#/componentes/examples/response-http-422'
+              $ref: '#/components/examples/response-http-422'
