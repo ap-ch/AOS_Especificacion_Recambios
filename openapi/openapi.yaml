@@ -30,6 +30,8 @@ components:
           type: object
           required: [numero_serie, nombre, descripcion, proveedor, equivalencias, garantia, precio, iva, importe, cantidad]
           properties:
+            numero_serie:
+              $ref: '#/components/schemas/Numero_Serie'
             nombre:
               $ref: '#/components/schemas/Nombre_Recambio'
             descripcion:
