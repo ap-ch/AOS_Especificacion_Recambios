@@ -28,7 +28,7 @@ components:
       properties:
         Recambio:
           type: object
-          required: [nombre,descripcion,proveedor,equivalencias,garantia,precio,iva,importe,cantidad]
+          required: [numero_serie, nombre, descripcion, proveedor, equivalencias, garantia, precio, iva, importe, cantidad]
           properties:
             nombre:
               $ref: '#/components/schemas/Nombre_Recambio'
@@ -48,6 +48,16 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
+    
+    Numero_Serie:
+      title: 'Numero de serie'
+      description: >
+        Código alfanumérico que permite identificar un recambio
+      type: string
+      pattern: '/^[A-Z]{1}[0-9]{7}-[A-Z]$/'
+      example: "Z0000001-A"
+      # https://v6.fakerjs.dev/guide/
+      x-faker: helpers.regexpStyleStringParse('/^[A-Z]{1}[0-9]{7}-[A-Z]$/')
 
     Nombre_Recambio:
       title: 'Nombre recambio'
