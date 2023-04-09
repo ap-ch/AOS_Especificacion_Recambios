@@ -50,7 +50,7 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
-    
+   
     Numero_Serie:
       title: 'Numero de serie'
       description: >
@@ -60,10 +60,11 @@ components:
       example: "Z0000001-A"
       # https://v6.fakerjs.dev/guide/
       x-faker: helpers.regexpStyleStringParse('/^[A-Z]{1}[0-9]{7}-[A-Z]$/')
-
+      
     Nombre_Recambio:
       title: 'Nombre recambio'
       type: string
+      
     Descripcion_Recambio:
       title: 'Descripcion'
       description: >
@@ -72,7 +73,7 @@ components:
         es importante para asegurarse de que el recambio es adecuado para el vehículo y 
         para comprender su función dentro del mismo.
       type: string
-
+      
     Proveedor_Recambio:
       title: 'Proveedor del recambio'
       description: >
@@ -80,6 +81,7 @@ components:
         especializada en la fabricación y distribución de piezas de repuesto para automóviles
         o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
       type: string
+      
     Equivalencias_Recambio:
       title: 'Equivalencias'
       description: >
@@ -107,6 +109,7 @@ components:
         del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
         de manera adecuada y sin defectos durante un periodo de tiempo determinado.
       type: string
+      
     Precio_Recambio:
       title: 'Precio'
       description: 'Precio sin IVA asignado a cada recambio'
@@ -114,6 +117,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      
     IVA_Recambio:
       title: 'IVA '
       description: >
@@ -125,6 +129,7 @@ components:
       example: '21%'
         # https://v6.fakerjs.dev/guide/
       x-faker: helpers.regexpStyleStringParse('/^[0-9]{1,2}[%]$/')
+      
     Importe_Recambio:
       title: 'Importe'
       description: 'Precio final añadiendo el IVA al precio a cada recambio'
@@ -132,6 +137,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      
     Cantidad_Recambio:
       title: 'Cantidad'
       description: 'Número de unidades del recambio disponibles en el taller'
@@ -139,6 +145,34 @@ components:
       minimum: 0
       maximum: 10000
 
+    HTTP_Problem:
+      type: object
+      externalDocs:
+        url: https://tools.ietf.org/html/rfc7807
+      description: |
+        Problem Details for HTTP APIs
+        [https://tools.ietf.org/html/rfc7807](https://tools.ietf.org/html/rfc7807)
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference [RFC3986] that identifies the problem type
+        title:
+          type: string
+          description: short human-readable summary of the problem type
+        status:
+          type: number
+          description: HTTP status code
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence of the problem
+        instance:
+          type: string
+          format: uri
+          description: >
+            A URI reference that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.
+    
   headers:
     Etag:
       description: "Entitiy tag (Identificador único proporcionado para validación de caché)"
@@ -160,7 +194,7 @@ components:
         x-facker: internet.url
         example:
           https://example.com/api/v1/recambios/
-  
+ 
   parameters:
     Nombre_Recambio:
       name: Nombre_Recambio
@@ -211,3 +245,103 @@ components:
         type: string
         pattern: "[0-9a-f]*"
 
+  requestBodies:
+    recambioRB:
+      description: Información del nuevo recambio
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [nombre, proveedor, garantia, precio, iva, cantidad]
+            properties:
+              nombre:
+                $ref: '#/components/schemas/Nombre_Recambio'
+              descripcion:
+                $ref: '#/components/schemas/Descripcion_Recambio'
+              proveedor:
+                $ref: '#/components/schemas/Proveedor_Recambio'
+              equivalencias:
+                $ref: '#/components/schemas/Equivalencias_Recambio'
+              garantia:
+                $ref: '#/components/schemas/Garantia_Recambio'
+              precio: 
+                $ref: '#/components/schemas/Precio_Recambio'
+              iva:
+                $ref: '#/components/schemas/IVA_Recambio'
+              importe:
+                $ref: '#/components/schemas/Importe_Recambio'
+              cantidad:
+                $ref: '#/components/schemas/Cantidad_Recambio'
+    recambioUpdate:
+      description: Nuevos atributos del recambio
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              descripcion:
+                $ref: '#/components/schemas/Descripcion_Recambio'
+              proveedor:
+                $ref: '#/components/schemas/Proveedor_Recambio'
+              equivalencias:
+                $ref: '#/components/schemas/Equivalencias_Recambio'
+              garantia:
+                $ref: '#/components/schemas/Garantia_Recambio'
+              precio: 
+                $ref: '#/components/schemas/Precio_Recambio'
+              iva:
+                $ref: '#/components/schemas/IVA_Recambio'
+              importe:
+                $ref: '#/components/schemas/Importe_Recambio'
+              cantidad: 
+                $ref: '#/components/schemas/Cantidad_Recambio'
+          example: { "precio": 19.95, "cantidad": 50 }
+
+  responses: 
+    Response_400:
+      description: '`BAD REQUEST`: El identificador único ya existe'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-400:
+              $ref: '#/componentes/examples/response-http-400'
+    Response_404:
+      description: '`NOT FOUND`: Recurso no disponbible'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-404:
+              $ref: '#/componentes/examples/response-http-404'
+    Response_409:
+      description: '`CONFLICT`: El recurso no reúne las condiciones adecuadas'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-409:
+              $ref: '#/componentes/examples/response-http-409'
+    Response_412:
+      description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-412:
+              $ref: '#/componentes/examples/response-http-412' 
+    Response_422:
+      description: '`UNPROCESSABLE ENTITY`: Falta alguno de los atributos obligatorios o son incorrectos'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/componentes/schemas/HTTP_Problem'
+          examples:
+            response-http-422:
+              $ref: '#/componentes/examples/response-http-422'
