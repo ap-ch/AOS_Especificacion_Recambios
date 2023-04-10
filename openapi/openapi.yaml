@@ -14,6 +14,79 @@ tags:
   - name: '⚙️Inventario'
 
 paths:
+  /recambios:
+    get:
+      summary: Obtiene todos los recambios
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code | Descripción | Motivo                             |
+        | ------------| ------------| -----------------------------------|
+        | **200**     | OK          | Listado de los recambios           |
+        | **404**     | NOT FOUND   | No hay ningun recambio             |
+      operationId: recambio_cget
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '200':
+          description: Lista de recambios disponibles
+          headers:
+            ETag:
+              $ref: '#/components/headers/Etag'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Recambios:
+                    description: array de recambios
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recambio'
+              examples:
+                plataformas-example:
+                  $ref: '#/components/examples/recambio-example'
+        '404':
+          $ref: '#/components/responses/Response_404'
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambio_coptions
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow'
+    post:
+      summary: Añade un nuevo recambio
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code | Descripción          | Motivo                                    |
+        | ------------| ---------------------| ------------------------------------------|
+        | **201**     | CREATED              | El recambio ha sido creado                |
+        | **400**     | BAD REQUEST          | El identificador único ya existe          |
+        | **422**     | UNPROCESSABLE ENTITY | Falta alguno de los atributos obligatorios|
+        |             |                      | o el valor no está permitido              |
+      tags: [ '⚙️Inventario' ]
+      operationId: recambio_post
+      requestBody:
+        $ref: '#/components/requestBodies/recambioRB'
+      responses:
+        '201':
+          description: Nuevo Recambio creado
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '400':
+          $ref: '#/components/responses/Response_400'
+        '422':
+          $ref: '#/components/responses/Response_422'
    
 components:
   schemas:
