@@ -28,8 +28,10 @@ components:
       properties:
         Recambio:
           type: object
-          required: [nombre,descripcion,proveedor,equivalencias,garantia,precio,iva,importe,cantidad]
+          required: [numero_serie, nombre, descripcion, proveedor, equivalencias, garantia, precio, iva, importe, cantidad]
           properties:
+            numero_serie:
+              $ref: '#/components/schemas/Numero_Serie'
             nombre:
               $ref: '#/components/schemas/Nombre_Recambio'
             descripcion:
@@ -48,10 +50,21 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
-              
+   
+    Numero_Serie:
+      title: 'Numero de serie'
+      description: >
+        Código alfanumérico que permite identificar un recambio
+      type: string
+      pattern: '/^[A-Z]{1}[0-9]{7}-[A-Z]$/'
+      example: "Z0000001-A"
+      # https://v6.fakerjs.dev/guide/
+      x-faker: helpers.regexpStyleStringParse('/^[A-Z]{1}[0-9]{7}-[A-Z]$/')
+      
     Nombre_Recambio:
       title: 'Nombre recambio'
       type: string
+      
     Descripcion_Recambio:
       title: 'Descripcion'
       description: >
@@ -60,7 +73,7 @@ components:
         es importante para asegurarse de que el recambio es adecuado para el vehículo y 
         para comprender su función dentro del mismo.
       type: string
-
+      
     Proveedor_Recambio:
       title: 'Proveedor del recambio'
       description: >
@@ -68,6 +81,7 @@ components:
         especializada en la fabricación y distribución de piezas de repuesto para automóviles
         o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
       type: string
+      
     Equivalencias_Recambio:
       title: 'Equivalencias'
       description: >
@@ -95,6 +109,7 @@ components:
         del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
         de manera adecuada y sin defectos durante un periodo de tiempo determinado.
       type: string
+      
     Precio_Recambio:
       title: 'Precio'
       description: 'Precio sin IVA asignado a cada recambio'
@@ -102,6 +117,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      
     IVA_Recambio:
       title: 'IVA '
       description: >
@@ -113,6 +129,7 @@ components:
       example: '21%'
         # https://v6.fakerjs.dev/guide/
       x-faker: helpers.regexpStyleStringParse('/^[0-9]{1,2}[%]$/')
+      
     Importe_Recambio:
       title: 'Importe'
       description: 'Precio final añadiendo el IVA al precio a cada recambio'
@@ -120,6 +137,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      
     Cantidad_Recambio:
       title: 'Cantidad'
       description: 'Número de unidades del recambio disponibles en el taller'
@@ -155,7 +173,6 @@ components:
             A URI reference that identifies the specific occurrence of the problem.
             It may or may not yield further information if dereferenced.
     
-
   headers:
     Etag:
       description: "Entitiy tag (Identificador único proporcionado para validación de caché)"
@@ -177,7 +194,57 @@ components:
         x-facker: internet.url
         example:
           https://example.com/api/v1/recambios/
-  
+ 
+  parameters:
+    Nombre_Recambio:
+      name: Nombre_Recambio
+      in: path
+      description: Nombre del recambio correspondiente a un artículo del taller
+      required: true
+      schema:
+        $ref: '#/components/schemas/Nombre_Recambio'
+
+    Proveedor_Recambio:
+      name: Proveedor_Recambio
+      in: path
+      description: El proveedor de un recambio para el taller de vehículos
+      required: true
+      schema:
+        $ref: '#/components/schemas/Proveedor_Recambio'
+
+    Equivalencias_Recambio:
+      name: Equivalencias_Recambio
+      in: query
+      description: equivalencias de un recambio para un vehículo
+      required: false
+      schema:
+        $ref: '#/components/schemas/Equivalencias_Recambio'
+    
+    Importe_Recambio:
+      name: Importe_Recambio
+      in: query
+      description: Precio final añadiendo el IVA al precio a cada recambio
+      required: false
+      schema:
+        $ref: '#/components/schemas/Importe_Recambio'
+
+    Cantidad_Recambio:
+      name: Cantidad_Recambio
+      in: query
+      description: Número de unidades del recambio disponibles en el taller
+      required: false
+      schema:
+        $ref: '#/components/schemas/Cantidad_Recambio'
+
+    ifMatchParam:
+      name: If-Match
+      in: header
+      description: ETag actual del recurso que se desea modificar
+      required: true
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
+
   requestBodies:
     recambioRB:
       description: Información del nuevo recambio
@@ -186,8 +253,10 @@ components:
         application/json:
           schema:
             type: object
-            required: [nombre, proveedor, garantia, precio, iva, cantidad]
+            required: [numero_serie, nombre, proveedor, garantia, precio, iva, cantidad]
             properties:
+              numero_serie:
+                $ref: '#/components/schemas/Numero_Serie'
               nombre:
                 $ref: '#/components/schemas/Nombre_Recambio'
               descripcion:
@@ -214,6 +283,8 @@ components:
           schema:
             type: object
             properties:
+              nombre:
+                $ref: '#/components/schemas/Nombre_Recambio'
               descripcion:
                 $ref: '#/components/schemas/Descripcion_Recambio'
               proveedor:
@@ -238,7 +309,7 @@ components:
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-400:
               $ref: '#/componentes/examples/response-http-400'
@@ -247,35 +318,34 @@ components:
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-404:
-              $ref: '#/componentes/examples/response-http-404'
+              $ref: '#/components/examples/response-http-404'
     Response_409:
       description: '`CONFLICT`: El recurso no reúne las condiciones adecuadas'
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-409:
-              $ref: '#/componentes/examples/response-http-409'
+              $ref: '#/components/examples/response-http-409'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-412:
-              $ref: '#/componentes/examples/response-http-412' 
+              $ref: '#/components/examples/response-http-412' 
     Response_422:
       description: '`UNPROCESSABLE ENTITY`: Falta alguno de los atributos obligatorios o son incorrectos'
       content: 
         application/problem+json:
           schema:
-            $ref: '#/componentes/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-422:
-              $ref: '#/componentes/examples/response-http-422'
-              
+              $ref: '#/components/examples/response-http-422'
