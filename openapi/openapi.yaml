@@ -361,9 +361,10 @@ components:
     recambios-examples:
       value:
         recambios:
-          - { "recambio": { "numero_serie": "Z0000001-A", "nombre": "Frenos\n" , "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; pinzas de aluminio de 6 pistones; un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." ,"proveedor": "Brembo", "equivalencias": {"nombre": "Freno", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } ,"garantia": "3 meses", "precio": "448.32", "iva": "21%", "importe": "587.50", "cantidad": "10"} 
+          - { "recambio": { "numero_serie": "Z0000001-A", "nombre": "Frenos" , "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; pinzas de aluminio de 6 pistones; un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." ,"proveedor": "Brembo", 
+              "equivalencias": {"nombre": "Freno", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } ,"garantia": "3 meses", "precio": "448.32", "iva": "21%", "importe": "587.50", "cantidad": "10"} 
               }
-              
+
           - { "recambio": { "numero_serie": "Z0000003-B", "nombre": "Neumático pilot sport 4 205/55ZR16" ,
               "descripcion": "El neumático de verano MICHELIN Pilot Sport 4 se adapta a la carretera gracias a su excelente reactividad y precisión de conducción y a su excelente duración" ,
               "proveedor": "Michelin", "equivalencias": {"nombre": "Neumático Potenza S001 205/55", "fabricante": "Bridgestone", "modelo": "Vehículos con dimensiones en las ruedas de 205/55" } ,
