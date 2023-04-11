@@ -50,12 +50,19 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
-      example: { "recambio": { "numero_serie": "Z0000001-A", "nombre": "Kit Frenos Brembo" ,
-              "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; pinzas de aluminio de 6 pistones; 
-              un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." ,
-              "proveedor": "Brembo", "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } ,
-              "garantia": "3 meses", "precio": "448.32", "iva": "21%", "importe": "587.50", "cantidad": "10"} 
-              }
+      example: { "recambio": { 
+        "numero_serie": "Z0000001-A", 
+        "nombre": "Kit Frenos Brembo" , 
+        "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; 
+        pinzas de aluminio de 6 pistones;  un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." , 
+        "proveedor": "Brembo", 
+        "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } , 
+        "garantia": "3 meses", 
+        "precio": "448.32", 
+        "iva": "21%", 
+        "importe": "587.50", 
+        "cantidad": "10"
+        } }
    
     Numero_Serie:
       title: 'Numero de serie'
@@ -70,7 +77,7 @@ components:
     Nombre_Recambio:
       title: 'Nombre recambio'
       type: string
-      example: "Kit Frenos Brembo"
+      example: "Kit Frenos"
     Descripcion_Recambio:
       title: 'Descripcion'
       description: >
@@ -108,6 +115,7 @@ components:
           modelo:
             type: string
             description: 'Modelo de vehículo compatible con la pieza equivalente'
+      example: {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" }
              
     Garantia_Recambio:
       title: 'Garantía del recambio'
@@ -116,6 +124,7 @@ components:
         del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
         de manera adecuada y sin defectos durante un periodo de tiempo determinado.
       type: string
+      example: "2 años"
       
     Precio_Recambio:
       title: 'Precio'
@@ -124,6 +133,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      example: 120.25
       
     IVA_Recambio:
       title: 'IVA '
@@ -144,6 +154,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      example: 145.5
       
     Cantidad_Recambio:
       title: 'Cantidad'
@@ -151,6 +162,7 @@ components:
       type: integer
       minimum: 0
       maximum: 10000
+      example: 200
 
     HTTP_Problem:
       type: object
@@ -360,16 +372,33 @@ components:
   examples:
     recambios-examples:
       value:
-        recambios:
-          - { "recambio": { "numero_serie": "Z0000001-A", "nombre": "Frenos" , "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; pinzas de aluminio de 6 pistones; un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." ,"proveedor": "Brembo", 
-              "equivalencias": {"nombre": "Freno", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } ,"garantia": "3 meses", "precio": "448.32", "iva": "21%", "importe": "587.50", "cantidad": "10"} 
-              }
+        recambios: 
+          - { "recambio": { 
+              "numero_serie": "Z0000001-A", 
+              "nombre": "Kit Frenos Brembo" , 
+              "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; 
+              pinzas de aluminio de 6 pistones;  un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." , 
+              "proveedor": "Brembo", 
+              "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } , 
+              "garantia": "3 meses", 
+              "precio": "448.32", 
+              "iva": "21%", 
+              "importe": "587.50", 
+              "cantidad": "10"
+            } }
 
-          - { "recambio": { "numero_serie": "Z0000003-B", "nombre": "Neumático pilot sport 4 205/55ZR16" ,
-              "descripcion": "El neumático de verano MICHELIN Pilot Sport 4 se adapta a la carretera gracias a su excelente reactividad y precisión de conducción y a su excelente duración" ,
-              "proveedor": "Michelin", "equivalencias": {"nombre": "Neumático Potenza S001 205/55", "fabricante": "Bridgestone", "modelo": "Vehículos con dimensiones en las ruedas de 205/55" } ,
-              "garantia": "No ofrece", "precio": "197.5", "iva": "21%", "importe": "250.00", "cantidad": "20"}
-              }
+          - { "recambio": { 
+              "numero_serie": "Z0000003-B", 
+              "nombre": "Neumático pilot sport 4 205/55ZR16" , 
+              "descripcion": "El neumático de verano MICHELIN Pilot Sport 4 se adapta a la carretera gracias a su excelente reactividad y precisión de conducción y a su excelente duración" , 
+              "proveedor": "Michelin", 
+              "equivalencias": {"nombre": "Neumático Potenza S001 205/55", "fabricante": "Bridgestone", "modelo": "Vehículos con dimensiones en las ruedas de 205/55" } , 
+              "garantia": "No ofrece", 
+              "precio": "197.5", 
+              "iva": "21%", 
+              "importe": "250.00", 
+              "cantidad": "20"
+            } }
 
     response-http-400:
       value:
