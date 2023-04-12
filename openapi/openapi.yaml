@@ -43,14 +43,14 @@ paths:
                     items:
                       $ref: '#/components/schemas/Recambio'
               examples:
-                plataformas-example:
-                  $ref: '#/components/examples/recambio-example'
+                recambioExample:
+                  $ref: '#/components/examples/recambios-examples'
         '404':
           $ref: '#/components/responses/Response_404'
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
-      operationId: recambio_coptions
+      operationId: recambio_options
       tags: [ '⚙️Inventario' ]
       responses:
         '204':
@@ -86,7 +86,99 @@ paths:
         '400':
           $ref: '#/components/responses/Response_400'
         '422':
+          $ref: '#/components/responses/Response_422' 
+
+
+
+  /recambios/{numero_serie}:
+    parameters:
+      - $ref: '#/components/parameters/recambioId'
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambio_options
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow' 
+    get:
+      summary: Obtiene un recambio identificad0 por `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code | Descripción | Motivo                             |
+        | ------------| ------------| -----------------------------------|
+        | **200**     | OK          | Si el recambio existe              |
+        | **404**     | NOT FOUND   | Si no existe el recambio           |
+      operationId: recambio_get
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '200':
+          description: Recambio
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+              examples:
+                recambioExample:
+                  $ref: '#/components/examples/recambios-examples'
+        '404':
+          $ref: '#/components/responses/Response_404'
+    delete:
+      summary: Elimina el recambio identificado por `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code      | Descripción | Motivo                                    |
+        | ---------------- | ------------| ------------------------------------------|
+        | **204**          | NO CONTENT  | El recambio existía y ha sido eliminado   |
+        | **404**          | NOT FOUND   | Si el recambio no existe                  |
+      operationId: recambio_delete
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '204':
+          description: Recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
+        '404':
+          $ref: '#/components/responses/Response_404'
+    put:
+      tags: [ '⚙️Inventario' ]
+      summary: Modifica el recambio identificado por `recambioId`.
+      description:  |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code | Descripción         | Motivo                                        |
+        | ------------| --------------------| ----------------------------------------------|
+        | **209**     | CONTENT RETURNED    | El recambio existía y ha sido actualizado     |
+        | **404**     | NOT FOUND           | Si el recambio no existe                      |
+        | **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |
+        | **422**     | UNPROCESSABLE ENTITY| Valor no permitido en alguno de los atributos |
+      operationId: recambio_put
+      parameters:
+        - $ref: '#/components/parameters/ifMatchParam'
+      requestBody:
+        $ref: '#/components/requestBodies/recambioUpdate'
+      responses:
+        '209':
+          description: '`CONTENT RETURNED`: el recambio ha sido actualizado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '404':
+          $ref: '#/components/responses/Response_404'
+        '412':
+          $ref: '#/components/responses/Response_412'
+        '422':
           $ref: '#/components/responses/Response_422'
+
+
+
+
    
 components:
   schemas:
@@ -414,15 +506,6 @@ components:
           examples:
             response-http-404:
               $ref: '#/components/examples/response-http-404'
-    Response_409:
-      description: '`CONFLICT`: El recurso no reúne las condiciones adecuadas'
-      content: 
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/HTTP_Problem'
-          examples:
-            response-http-409:
-              $ref: '#/components/examples/response-http-409'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
       content: 
@@ -486,13 +569,6 @@ components:
         title: NOT FOUND
         status: 404
         detail: El recurso solicitado no está disponible.
-        instance: about:blank
-    response-http-409:
-      value:
-        type: https://httpstatuses.com/409
-        title: NOT FOUND
-        status: 409
-        detail: El recurso no reúne las condiciones requeridas para la operación.
         instance: about:blank
     response-http-412:
       value:
