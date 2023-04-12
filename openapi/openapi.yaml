@@ -50,7 +50,7 @@ paths:
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
-      operationId: recambio_options
+      operationId: recambio_coptions
       tags: [ '⚙️Inventario' ]
       responses:
         '204':
