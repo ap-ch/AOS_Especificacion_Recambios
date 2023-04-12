@@ -8,6 +8,10 @@ info:
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
+  contact:
+    name: Escuela Técnica Superior de Sistemas Informaticos
+    url: 'https://www.etsisi.upm.es/'
+    email: webmaster@etsisi.upm.es
 servers:
   - url: http://127.0.0.1:80/api/v1
 tags:
@@ -43,8 +47,8 @@ paths:
                     items:
                       $ref: '#/components/schemas/Recambio'
               examples:
-                plataformas-example:
-                  $ref: '#/components/examples/recambio-example'
+                recambioExample:
+                  $ref: '#/components/examples/recambios-examples'
         '404':
           $ref: '#/components/responses/Response_404'
     options:
@@ -86,7 +90,99 @@ paths:
         '400':
           $ref: '#/components/responses/Response_400'
         '422':
+          $ref: '#/components/responses/Response_422' 
+
+
+
+  /recambios/{Numero_serie}:
+    parameters:
+      - $ref: '#/components/parameters/Numero_serie'
+    options:
+      summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
+      description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
+      operationId: recambio_options
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '204':
+          description: 'cabecera `Allow` &lt;El cuerpo de la respuesta está vacío&gt;'
+          headers:
+            Allow:
+              $ref: '#/components/headers/Allow' 
+    get:
+      summary: Obtiene un recambio identificad0 por `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code | Descripción | Motivo                             |
+        | ------------| ------------| -----------------------------------|
+        | **200**     | OK          | Si el recambio existe              |
+        | **404**     | NOT FOUND   | Si no existe el recambio           |
+      operationId: recambio_get
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '200':
+          description: Recambio
+          headers:
+            ETag:
+              $ref: '#/components/headers/Etag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+              examples:
+                recambioExample:
+                  $ref: '#/components/examples/recambios-examples'
+        '404':
+          $ref: '#/components/responses/Response_404'
+    delete:
+      summary: Elimina el recambio identificado por `recambioId`
+      description: |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        
+        | Status Code      | Descripción | Motivo                                    |
+        | ---------------- | ------------| ------------------------------------------|
+        | **204**          | NO CONTENT  | El recambio existía y ha sido eliminado   |
+        | **404**          | NOT FOUND   | Si el recambio no existe                  |
+      operationId: recambio_delete
+      tags: [ '⚙️Inventario' ]
+      responses:
+        '204':
+          description: Recambio eliminado &lt;Cuerpo de la respuesta vacío&gt;
+        '404':
+          $ref: '#/components/responses/Response_404'
+    put:
+      tags: [ '⚙️Inventario' ]
+      summary: Modifica el recambio identificado por `recambioId`.
+      description:  |
+        La siguiente tabla define los códigos de estado que puede devolver este endpoint
+        | Status Code | Descripción         | Motivo                                        |
+        | ------------| --------------------| ----------------------------------------------|
+        | **209**     | CONTENT RETURNED    | El recambio existía y ha sido actualizado     |
+        | **404**     | NOT FOUND           | Si el recambio no existe                      |
+        | **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |
+        | **422**     | UNPROCESSABLE ENTITY| Valor no permitido en alguno de los atributos |
+      operationId: recambio_put
+      parameters:
+        - $ref: '#/components/parameters/ifMatchParam'
+      requestBody:
+        $ref: '#/components/requestBodies/recambioUpdate'
+      responses:
+        '209':
+          description: '`CONTENT RETURNED`: el recambio ha sido actualizado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recambio'
+        '404':
+          $ref: '#/components/responses/Response_404'
+        '412':
+          $ref: '#/components/responses/Response_412'
+        '422':
           $ref: '#/components/responses/Response_422'
+
+
+
+
    
 components:
   schemas:
@@ -123,6 +219,19 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
+      example: { "recambio": { 
+        "numero_serie": "Z0000001-A", 
+        "nombre": "Kit Frenos Brembo" , 
+        "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; 
+        pinzas de aluminio de 6 pistones;  un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." , 
+        "proveedor": "Brembo", 
+        "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } , 
+        "garantia": "3 meses", 
+        "precio": "448.32", 
+        "iva": "21%", 
+        "importe": "587.50", 
+        "cantidad": "10"
+        } }
    
     Numero_Serie:
       title: 'Numero de serie'
@@ -137,7 +246,7 @@ components:
     Nombre_Recambio:
       title: 'Nombre recambio'
       type: string
-      
+      example: "Kit Frenos"
     Descripcion_Recambio:
       title: 'Descripcion'
       description: >
@@ -154,6 +263,7 @@ components:
         especializada en la fabricación y distribución de piezas de repuesto para automóviles
         o bien un distribuidor que suministre los repuestos de diferentes fabricantes. 
       type: string
+      example: "Michelin"
       
     Equivalencias_Recambio:
       title: 'Equivalencias'
@@ -174,6 +284,7 @@ components:
           modelo:
             type: string
             description: 'Modelo de vehículo compatible con la pieza equivalente'
+      example: {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" }
              
     Garantia_Recambio:
       title: 'Garantía del recambio'
@@ -182,6 +293,7 @@ components:
         del recambio adquiere con el comprador, en el que se asegura que el recambio funcionará 
         de manera adecuada y sin defectos durante un periodo de tiempo determinado.
       type: string
+      example: "2 años"
       
     Precio_Recambio:
       title: 'Precio'
@@ -190,6 +302,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      example: 120.25
       
     IVA_Recambio:
       title: 'IVA '
@@ -210,6 +323,7 @@ components:
       format: double
       minimum: 0
       exclusiveMinimum: true
+      example: 145.5
       
     Cantidad_Recambio:
       title: 'Cantidad'
@@ -217,6 +331,7 @@ components:
       type: integer
       minimum: 0
       maximum: 10000
+      example: 200
 
     HTTP_Problem:
       type: object
@@ -269,19 +384,27 @@ components:
           https://example.com/api/v1/recambios/
  
   parameters:
+    Numero_serie:
+      name: Numero_serie
+      in: path
+      description: identificador del recambio correspondiente a un artículo del taller
+      required: true
+      schema:
+        $ref: '#/components/schemas/Numero_Serie'
+
     Nombre_Recambio:
       name: Nombre_Recambio
-      in: path
+      in: query
       description: Nombre del recambio correspondiente a un artículo del taller
-      required: true
+      required: false
       schema:
         $ref: '#/components/schemas/Nombre_Recambio'
 
     Proveedor_Recambio:
       name: Proveedor_Recambio
-      in: path
+      in: query
       description: El proveedor de un recambio para el taller de vehículos
-      required: true
+      required: false
       schema:
         $ref: '#/components/schemas/Proveedor_Recambio'
 
@@ -385,7 +508,7 @@ components:
             $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-400:
-              $ref: '#/componentes/examples/response-http-400'
+              $ref: '#/components/examples/response-http-400'
     Response_404:
       description: '`NOT FOUND`: Recurso no disponbible'
       content: 
@@ -395,15 +518,6 @@ components:
           examples:
             response-http-404:
               $ref: '#/components/examples/response-http-404'
-    Response_409:
-      description: '`CONFLICT`: El recurso no reúne las condiciones adecuadas'
-      content: 
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/HTTP_Problem'
-          examples:
-            response-http-409:
-              $ref: '#/components/examples/response-http-409'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
       content: 
@@ -422,3 +536,65 @@ components:
           examples:
             response-http-422:
               $ref: '#/components/examples/response-http-422'
+  
+  examples:
+    recambios-examples:
+      value:
+        recambios: 
+          - { "recambio": { 
+              "numero_serie": "Z0000001-A", 
+              "nombre": "Kit Frenos Brembo" , 
+              "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; 
+              pinzas de aluminio de 6 pistones;  un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." , 
+              "proveedor": "Brembo", 
+              "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } , 
+              "garantia": "3 meses", 
+              "precio": "448.32", 
+              "iva": "21%", 
+              "importe": "587.50", 
+              "cantidad": "10"
+            } }
+
+          - { "recambio": { 
+              "numero_serie": "Z0000003-B", 
+              "nombre": "Neumático pilot sport 4 205/55ZR16" , 
+              "descripcion": "El neumático de verano MICHELIN Pilot Sport 4 se adapta a la carretera gracias a su excelente reactividad y precisión de conducción y a su excelente duración" , 
+              "proveedor": "Michelin", 
+              "equivalencias": {"nombre": "Neumático Potenza S001 205/55", "fabricante": "Bridgestone", "modelo": "Vehículos con dimensiones en las ruedas de 205/55" } , 
+              "garantia": "No ofrece", 
+              "precio": "197.5", 
+              "iva": "21%", 
+              "importe": "250.00", 
+              "cantidad": "20"
+            } }
+
+    response-http-400:
+      value:
+        type: https://httpstatuses.com/400
+        title: UNPROCESSABLE ENTITY
+        status: 400
+        detail: El identificador único ya existe
+        instance: about:blank
+    response-http-404:
+      value:
+        type: https://httpstatuses.com/404
+        title: NOT FOUND
+        status: 404
+        detail: El recurso solicitado no está disponible.
+        instance: about:blank
+    response-http-412:
+      value:
+        type: https://httpstatuses.com/412
+        title: PRECONDITION FAILED
+        status: 412
+        detail: El ETag proporcionado no está actualizado
+        instance: about:blank
+    response-http-422:
+      value:
+        type: https://httpstatuses.com/422
+        title: UNPROCESSABLE ENTITY
+        status: 422
+        detail: Falta alguno de los atributos obligatorios o contiene un valor no admitido
+        instance: about:blank
+
+    
