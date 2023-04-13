@@ -44,7 +44,7 @@ paths:
                       $ref: '#/components/schemas/Recambio'
               examples:
                 plataformas-example:
-                  $ref: '#/components/examples/recambio-example'
+                  $ref: '#/components/examples/recambios-examples'
         '404':
           $ref: '#/components/responses/Response_404'
     options:
