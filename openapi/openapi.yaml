@@ -159,6 +159,7 @@ paths:
         | ------------| --------------------| ----------------------------------------------|
         | **209**     | CONTENT RETURNED    | El recambio existía y ha sido actualizado     |
         | **404**     | NOT FOUND           | Si el recambio no existe                      |
+        | **409**     | CONFLICT            | Si existe un conflicto con el recurso         |
         | **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |
         | **422**     | UNPROCESSABLE ENTITY| Valor no permitido en alguno de los atributos |
       operationId: recambio_put
@@ -175,14 +176,12 @@ paths:
                 $ref: '#/components/schemas/Recambio'
         '404':
           $ref: '#/components/responses/Response_404'
+        '409':
+          $ref: '#/components/responses/Response_409'
         '412':
           $ref: '#/components/responses/Response_412'
         '422':
           $ref: '#/components/responses/Response_422'
-
-
-
-
    
 components:
   schemas:
@@ -518,6 +517,15 @@ components:
           examples:
             response-http-404:
               $ref: '#/components/examples/response-http-404'
+    Response_409:
+      description: '`CONFLICT`: Existe un conflicto con el recurso'
+      content: 
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-412:
+              $ref: '#/components/examples/response-http-409'
     Response_412:
       description: '`PRECONDITION FAILED`: El ETag proporcionado no está actualizado'
       content: 
@@ -582,6 +590,13 @@ components:
         status: 404
         detail: El recurso solicitado no está disponible.
         instance: about:blank
+    response-http-409:
+      value:
+        type: https://httpstatuses.com/409
+        title: CONFLICT
+        status: 409
+        detail: Existe un conflicto con el recurso
+        instance: about:blank
     response-http-412:
       value:
         type: https://httpstatuses.com/412
@@ -596,5 +611,3 @@ components:
         status: 422
         detail: Falta alguno de los atributos obligatorios o contiene un valor no admitido
         instance: about:blank
-
-    
