@@ -367,7 +367,7 @@ components:
         type: string
         pattern: "[0-9a-f]*"
         example:
-          35c3d556o23utew
+          a4765bdc887fe
     Allow:
       description: "Lista de métodos HTTP soportados"
       schema:
