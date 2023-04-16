@@ -92,8 +92,6 @@ paths:
         '422':
           $ref: '#/components/responses/Response_422' 
 
-
-
   /recambios/{Numero_Serie}:
     parameters:
       - $ref: '#/components/parameters/Numero_Serie'
