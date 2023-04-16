@@ -92,11 +92,9 @@ paths:
         '422':
           $ref: '#/components/responses/Response_422' 
 
-
-
-  /recambios/{Numero_serie}:
+  /recambios/{Numero_Serie}:
     parameters:
-      - $ref: '#/components/parameters/Numero_serie'
+      - $ref: '#/components/parameters/Numero_Serie'
     options:
       summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
       description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
@@ -152,7 +150,7 @@ paths:
           $ref: '#/components/responses/Response_404'
     put:
       tags: [ '⚙️Inventario' ]
-      summary: Modifica el recambio identificado por `recambioId`.
+      summary: Modifica el recambio identificado por `Numero_Serie`.
       description:  |
         La siguiente tabla define los códigos de estado que puede devolver este endpoint
         | Status Code | Descripción         | Motivo                                        |
@@ -237,7 +235,7 @@ components:
       description: >
         Código alfanumérico que permite identificar un recambio
       type: string
-      pattern: '/^[A-Z]{1}[0-9]{7}-[A-Z]$/'
+      pattern: '^[A-Z]{1}[0-9]{7}-[A-Z]$'
       example: "Z0000001-A"
       # https://v6.fakerjs.dev/guide/
       x-faker: helpers.regexpStyleStringParse('/^[A-Z]{1}[0-9]{7}-[A-Z]$/')
@@ -246,6 +244,7 @@ components:
       title: 'Nombre recambio'
       type: string
       example: "Kit Frenos"
+
     Descripcion_Recambio:
       title: 'Descripcion'
       description: >
@@ -270,19 +269,18 @@ components:
         Las equivalencias de un recambio para un vehículo se refieren a piezas o componentes que,
         aunque no sean exactamente iguales en diseño o especificaciones técnicas a la pieza 
         original del vehículo, pueden ser utilizadas como reemplazo para dicha pieza.
-      type: string
-      items:
-        type: object
-        properties:
-          nombre: 
-            type: string
-            description: 'Nombre de la pieza equivalente'
-          fabricante:
-            type: string
-            description: 'Nombre del fabricante de la pieza equivalente'
-          modelo:
-            type: string
-            description: 'Modelo de vehículo compatible con la pieza equivalente'
+      type: object
+      required: [nombre, fabricante, modelo]
+      properties:
+        nombre: 
+          type: string
+          description: 'Nombre de la pieza equivalente'
+        fabricante:
+          type: string
+          description: 'Nombre del fabricante de la pieza equivalente'
+        modelo:
+          type: string
+          description: 'Modelo de vehículo compatible con la pieza equivalente'
       example: {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" }
              
     Garantia_Recambio:
@@ -310,10 +308,10 @@ components:
         puesto que lo pagan al adquirir un producto o servicio: sobre el precio neto 
         de los mismos se establece una aplicación que varía en su porcentaje.
       type: string
-      pattern: '/^[0-9]{1,2}[%]$/'
+      pattern: '^[0-9]{1,2}[%]$'
       example: '21%'
         # https://v6.fakerjs.dev/guide/
-      x-faker: helpers.regexpStyleStringParse('/^[0-9]{1,2}[%]$/')
+      x-faker: helpers.regexpStyleStringParse('^[0-9]{1,2}[%]$')
       
     Importe_Recambio:
       title: 'Importe'
@@ -367,7 +365,7 @@ components:
         type: string
         pattern: "[0-9a-f]*"
         example:
-          35c3d556o23utew
+          a4765bdc887fe
     Allow:
       description: "Lista de métodos HTTP soportados"
       schema:
@@ -383,8 +381,8 @@ components:
           https://example.com/api/v1/recambios/
  
   parameters:
-    Numero_serie:
-      name: Numero_serie
+    Numero_Serie:
+      name: Numero_Serie
       in: path
       description: identificador del recambio correspondiente a un artículo del taller
       required: true
