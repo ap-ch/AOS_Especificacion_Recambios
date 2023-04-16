@@ -46,6 +46,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Recambio'
+                  links:
+                    description: Enlaces de paginación
+                    readOnly: true
+                    type: object
+                    properties:
+                      prevPage:
+                        $ref: '#/components/schemas/Link'
+                      nextPage:
+                        $ref: '#/components/schemas/Link'
               examples:
                 recambioExample:
                   $ref: '#/components/examples/recambios-examples'
@@ -218,6 +227,15 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
+            links:
+              description: Enlaces de relación de la Plataforma
+              readOnly: true
+              type: object
+              properties:
+                parent:
+                  $ref: '#/components/schemas/Link'
+                self:
+                  $ref: '#/components/schemas/Link'
       example: { "recambio": { 
         "numero_serie": "Z0000001-A", 
         "nombre": "Kit Frenos Brembo" , 
@@ -229,7 +247,11 @@ components:
         "precio": "448.32", 
         "iva": "21%", 
         "importe": "587.50", 
-        "cantidad": "10"
+        "cantidad": "10",
+        "links": {
+                  "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+                  "self": { "href": "https://example.com/api/v1/recambios/Z0000001-A", "rel": "recambio_get recambio_delete recambio_put" }
+              }
         } }
    
     Numero_Serie:
@@ -359,6 +381,24 @@ components:
           description: >
             A URI reference that identifies the specific occurrence of the problem.
             It may or may not yield further information if dereferenced.
+    Link:
+      description: Enlace de relación
+      title: '🔗 Link'
+      type: object
+      properties:
+        href:
+          description: URL del enlace
+          type: string
+          format: uri
+          x-faker: internet.url
+        rel:
+          description: "Relación del recurso enlazado con el actual. Contiene una lista de tipos
+                    de relaciones separados por espacio."
+          type: string
+          x-faker: lorem.words
+      example:
+        href: https://www.example.com/path/resource
+        rel: relAction1 relAction2
     
   headers:
     Etag:
@@ -560,7 +600,11 @@ components:
               "precio": "448.32", 
               "iva": "21%", 
               "importe": "587.50", 
-              "cantidad": "10"
+              "cantidad": "10",
+              "links": {
+                  "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+                  "self": { "href": "https://example.com/api/v1/recambios/Z0000001-A", "rel": "recambio_get recambio_delete recambio_put" }
+              }
             } }
 
           - { "recambio": { 
@@ -573,8 +617,16 @@ components:
               "precio": "197.5", 
               "iva": "21%", 
               "importe": "250.00", 
-              "cantidad": "20"
+              "cantidad": "20",
+              "links": {
+                  "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+                  "self": { "href": "https://example.com/api/v1/recambios/Z0000003-B", "rel": "recambio_get recambio_delete recambio_put" }
+              }
             } }
+        links: {
+          "prevPage": { "href": "https://example.com/api/v1/recambios?page=2", "rel": "prevPage" },
+          "nextPage": { "href": "https://example.com/api/v1/recambios?page=4", "rel": "nextPage" }
+        }
 
     response-http-400:
       value:
