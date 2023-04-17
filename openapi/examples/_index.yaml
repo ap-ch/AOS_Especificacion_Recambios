@@ -1,0 +1,12 @@
+recambios-examples:
+  $ref: "./recambios-examples.yaml"
+response-http-400:
+  $ref: "./response-http-400.yaml"
+response-http-404:
+  $ref: "./response-http-404.yaml"
+response-http-409:
+  $ref: "./response-http-409.yaml"
+response-http-412:
+  $ref: "./response-http-412.yaml"
+response-http-422:
+  $ref: "./response-http-422.yaml"

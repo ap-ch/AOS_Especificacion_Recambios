@@ -1,0 +1,10 @@
+Response_400:
+  $ref: "./Response_400.yaml"
+Response_404:
+  $ref: "./Response_404.yaml"
+Response_409:
+  $ref: "./Response_409.yaml"
+Response_412:
+  $ref: "./Response_412.yaml"
+Response_422:
+  $ref: "./Response_422.yaml"

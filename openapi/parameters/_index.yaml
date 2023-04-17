@@ -1,0 +1,14 @@
+Numero_Serie:
+  $ref: "./Numero_Serie.yaml"
+Nombre_Recambio:
+  $ref: "./Nombre_Recambio.yaml"
+Proveedor_Recambio:
+  $ref: "./Proveedor_Recambio.yaml"
+Equivalencias_Recambio:
+  $ref: "./Equivalencias_Recambio.yaml"
+Importe_Recambio:
+  $ref: "./Importe_Recambio.yaml"
+Cantidad_Recambio:
+  $ref: "./Cantidad_Recambio.yaml"
+ifMatchParam:
+  $ref: "./ifMatchParam.yaml"
