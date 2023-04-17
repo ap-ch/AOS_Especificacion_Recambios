@@ -2,7 +2,7 @@ description: '`UNPROCESSABLE ENTITY`: Falta alguno de los atributos obligatorios
 content: 
   application/problem+json:
     schema:
-      $ref: '#/components/schemas/HTTP_Problem'
+      $ref: '../schemas/Http_Problem.yaml'
     examples:
       response-http-422:
         $ref: '../examples/response-http-422.yaml'
