@@ -22,3 +22,6 @@ Cantidad_Recambio:
   $ref: "./Cantidad_Recambio.yaml"
 HTTP_Problem:
   $ref: "./Http_Problem.yaml"
+Link:
+  $ref: "./Link.yaml"
+  

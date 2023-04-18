@@ -11,7 +11,11 @@ value:
         "precio": "448.32", 
         "iva": "21%", 
         "importe": "587.50", 
-        "cantidad": "10"
+        "cantidad": "10",
+        "links": {
+            "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+            "self": { "href": "https://example.com/api/v1/recambios/Z0000001-A", "rel": "recambio_get recambio_delete recambio_put" }
+        }
       } }
 
     - { "recambio": { 
@@ -24,5 +28,13 @@ value:
         "precio": "197.5", 
         "iva": "21%", 
         "importe": "250.00", 
-        "cantidad": "20"
+        "cantidad": "20",
+        "links": {
+            "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+            "self": { "href": "https://example.com/api/v1/recambios/Z0000003-B", "rel": "recambio_get recambio_delete recambio_put" }
+        }
       } }
+  links: {
+    "prevPage": { "href": "https://example.com/api/v1/recambios?page=2", "rel": "prevPage" },
+    "nextPage": { "href": "https://example.com/api/v1/recambios?page=4", "rel": "nextPage" }
+  }

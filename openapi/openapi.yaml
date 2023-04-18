@@ -32,6 +32,6 @@ components:
   requestBodies:
     $ref: "./requestBodies/_index.yaml"
   responses:
-    $ref: "./response/_index.yaml"
+    $ref: "./responses/_index.yaml"
   examples:
     $ref: "./examples/_index.yaml"

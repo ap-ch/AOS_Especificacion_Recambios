@@ -41,5 +41,9 @@ example: { "recambio": {
   "precio": "448.32", 
   "iva": "21%", 
   "importe": "587.50", 
-  "cantidad": "10"
+  "cantidad": "10",
+  "links": {
+      "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+      "self": { "href": "https://example.com/api/v1/recambios/Z0000001-A", "rel": "recambio_get recambio_delete recambio_put" }
+    }
   } }
