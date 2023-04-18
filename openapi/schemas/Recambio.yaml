@@ -11,7 +11,7 @@ properties:
     required: [numero_serie, nombre, descripcion, proveedor, equivalencias, garantia, precio, iva, importe, cantidad]
     properties:
       numero_serie:
-        $ref: './Numero_serie.yaml'
+        $ref: './Numero_Serie.yaml'
       nombre:
         $ref: './Nombre_Recambio.yaml'
       descripcion:

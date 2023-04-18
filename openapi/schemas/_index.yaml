@@ -1,7 +1,7 @@
 Recambio:
   $ref: "./Recambio.yaml"
 Numero_Serie:
-  $ref: "./Numero_serie.yaml"
+  $ref: "./Numero_Serie.yaml"
 Nombre_Recambio:
   $ref: "./Nombre_Recambio.yaml"
 Descripcion_Recambio:
