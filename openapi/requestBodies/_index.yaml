@@ -1,4 +1,0 @@
-recambioRB:
-  $ref: "./recambioRB.yaml"
-recambioUpdate:
-  $ref: "./recambioUpdate.yaml"

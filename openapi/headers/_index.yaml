@@ -1,6 +1,0 @@
-Etag:
-  $ref: "./Etag.yaml"
-Allow:
-  $ref: "./Allow.yaml"
-Location:
-  $ref: "./Location.yaml"

@@ -1,6 +1,6 @@
-parameters:
-  - $ref: '../parameters/Numero_Serie.yaml'
 options:
+  parameters:
+    - $ref: '../parameters/Numero_Serie.yaml'
   summary: Proporciona la lista de los métodos HTTP soportados por esta ruta.
   description: Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).
   operationId: recambio_options
@@ -12,7 +12,9 @@ options:
         Allow:
           $ref: '../headers/Allow.yaml' 
 get:
-  summary: Obtiene un recambio identificad0 por `recambioId`
+  parameters:
+    - $ref: '../parameters/Numero_Serie.yaml'
+  summary: Obtiene un recambio identificad0 por `Numero_Serie`
   description: |
     La siguiente tabla define los códigos de estado que puede devolver este endpoint
     
@@ -38,7 +40,9 @@ get:
     '404':
       $ref: '../responses/Response_404.yaml'
 delete:
-  summary: Elimina el recambio identificado por `recambioId`
+  parameters:
+    - $ref: '../parameters/Numero_Serie.yaml'
+  summary: Elimina el recambio identificado por `Numero_Serie`
   description: |
     La siguiente tabla define los códigos de estado que puede devolver este endpoint
     
@@ -54,6 +58,9 @@ delete:
     '404':
       $ref: '../responses/Response_404.yaml'
 put:
+  parameters:
+    - $ref: '../parameters/Numero_Serie.yaml'
+    - $ref: '../parameters/ifMatchParam.yaml'
   tags: [ '⚙️Inventario' ]
   summary: Modifica el recambio identificado por `Numero_Serie`.
   description:  |
@@ -66,8 +73,6 @@ put:
     | **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |
     | **422**     | UNPROCESSABLE ENTITY| Valor no permitido en alguno de los atributos |
   operationId: recambio_put
-  parameters:
-    - $ref: '../parameters/ifMatchParam.yaml'
   requestBody:
     $ref: '../requestBodies/recambioUpdate.yaml'
   responses:
