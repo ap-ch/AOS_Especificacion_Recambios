@@ -33,10 +33,16 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/Recambio.yaml'
+            type: object
+            properties:
+              Recambios:
+                description: array de recambios
+                type: array
+                items:
+                  $ref: '../schemas/Recambio.yaml'
           examples:
             recambioExample:
-              $ref: '../examples/recambios-examples.yaml'
+              $ref: '../examples/recambios-busqueda-examples.yaml'
     '404':
       $ref: '../responses/Response_404.yaml'
 delete:
