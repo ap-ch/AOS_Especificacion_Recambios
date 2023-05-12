@@ -46,8 +46,17 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Recambio'
+                  Links:
+                    description: Enlaces de paginación
+                    readOnly: true
+                    type: object
+                    properties:
+                      prevPage:
+                        $ref: '#/components/schemas/Link'
+                      nextPage:
+                        $ref: '#/components/schemas/Link'
               examples:
-                recambioExample:
+                recambiosExample:
                   $ref: '#/components/examples/recambios-examples'
         '404':
           $ref: '#/components/responses/Response_404'
@@ -126,10 +135,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recambio'
+                type: object
+                properties:
+                  Recambios:
+                    description: array de recambios
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recambio'
               examples:
                 recambioExample:
-                  $ref: '#/components/examples/recambios-examples'
+                  $ref: '#/components/examples/recambios-busqueda-examples'
         '404':
           $ref: '#/components/responses/Response_404'
     delete:
@@ -216,19 +231,6 @@ components:
               $ref: '#/components/schemas/Importe_Recambio'
             cantidad: 
               $ref: '#/components/schemas/Cantidad_Recambio'
-      example: { "recambio": { 
-        "numero_serie": "Z0000001-A", 
-        "nombre": "Kit Frenos Brembo" , 
-        "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; 
-        pinzas de aluminio de 6 pistones;  un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." , 
-        "proveedor": "Brembo", 
-        "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } , 
-        "garantia": "3 meses", 
-        "precio": "448.32", 
-        "iva": "21%", 
-        "importe": "587.50", 
-        "cantidad": "10"
-        } }
    
     Numero_Serie:
       title: 'Numero de serie'
@@ -357,6 +359,25 @@ components:
           description: >
             A URI reference that identifies the specific occurrence of the problem.
             It may or may not yield further information if dereferenced.
+
+    Link:
+      description: Enlace de relación
+      title: '🔗 Link'
+      type: object
+      properties:
+        href:
+          description: URL del enlace
+          type: string
+          format: uri
+          x-faker: internet.url
+        rel:
+          description: "Relación del recurso enlazado con el actual. Contiene una lista de tipos
+                          de relaciones separados por espacio."
+          type: string
+          x-faker: lorem.words
+      example:
+        href: https://www.example.com/path/resource
+        rel: relAction1 relAction2
     
   headers:
     Etag:
@@ -558,7 +579,11 @@ components:
               "precio": "448.32", 
               "iva": "21%", 
               "importe": "587.50", 
-              "cantidad": "10"
+              "cantidad": "10",
+              "links": {
+                  "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+                  "self": { "href": "https://example.com/api/v1/recambios/Z0000001-A", "rel": "recambio_get recambio_delete recambio_put" }
+              }
             } }
 
           - { "recambio": { 
@@ -571,9 +596,37 @@ components:
               "precio": "197.5", 
               "iva": "21%", 
               "importe": "250.00", 
-              "cantidad": "20"
+              "cantidad": "20",
+              "links": {
+                  "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+                  "self": { "href": "https://example.com/api/v1/recambios/Z0000003-B", "rel": "recambio_get recambio_delete recambio_put" }
+              }
             } }
+        links: {
+          "prevPage": { "href": "https://example.com/api/v1/recambios?page=2", "rel": "prevPage" },
+          "nextPage": { "href": "https://example.com/api/v1/recambios?page=4", "rel": "nextPage" }
+        }
 
+    recambios-busqueda-examples:
+      value:
+        recambios:
+          - { 
+            "numero_serie": "Z0000001-A", 
+            "nombre": "Kit Frenos Brembo" , 
+            "descripcion": "Los kits Brembo GT | M están compuestos por discos compuestos y perforados; 
+            pinzas de aluminio de 6 pistones;  un set completo de pastillas de altas prestaciones; tubos con trenzado metálico y tornillería de gran calidad." , 
+            "proveedor": "Brembo", 
+            "equivalencias": {"nombre": "Kit Frenos EBC", "fabricante": "EBC Brakes", "modelo": "Golf GTI MK7" } , 
+            "garantia": "3 meses", 
+            "precio": "448.32", 
+            "iva": "21%", 
+            "importe": "587.50", 
+            "cantidad": "10",
+            "links": {
+                "parent": { "href": "https://example.com/api/v1/recambios", "rel": "recambio_post recambio_cget"},
+                "self": { "href": "https://example.com/api/v1/recambios/Z0000001-A", "rel": "recambio_get recambio_delete recambio_put" }
+            } }
+        
     response-http-400:
       value:
         type: https://httpstatuses.com/400
